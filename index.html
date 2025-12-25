@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eric NIYITANGA  Portfolio</title>
+<link rel="shortcut icon" href="ERICH.png" type="image/x-icon">
+<style>
+/* ================= Reset & Base ================= */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
+body { background:#0f172a; color:#e5e7eb; overflow-x:hidden; transition:all 0.3s ease; }
+body.light { background:#f3f4f6; color:#0f172a; }
+a { text-decoration:none; color:inherit; }
+button { cursor:pointer; }
+
+/* ================= Loader ================= */
+#loader { position:fixed; top:0; left:0; width:100%; height:100%; background:#0f172a; color:#38bdf8; display:flex; justify-content:center; align-items:center; flex-direction:column; font-size:2em; z-index:9999; }
+#loader span { margin-top:20px; font-size:1em; color:#e5e7eb; }
+
+/* ================= Header ================= */
+header { position:fixed; top:0; left:0; width: 100%; display:flex; justify-content:space-between; align-items:center; padding:20px 50px; z-index:100; background:rgba(15,23,42,0.8); backdrop-filter:blur(10px); transition:0.3s; }
+header nav a { margin-left:20px; font-weight:500; transition:0.3s; }
+header nav a:hover { color:#38bdf8; }
+#themeToggle { cursor:pointer; padding:5px 10px; border:none; border-radius:8px; background:#38bdf8; color:#0f172a; margin-left:20px; transition:0.3s; }
+#themeToggle:hover { opacity:0.8; }
+
+/* ================= Hero ================= */
+.hero { position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; overflow:hidden; cursor:pointer; }
+.hero img { border-radius:50%; width:180px; height:180px; object-fit:cover; border:4px solid #38bdf8; transition: transform 0.3s ease; z-index:2; }
+.hero:hover img { transform: scale(1.15) rotate(5deg); }
+.hero h1 { font-size:3em; margin-top:20px; color:#fff; transition:0.3s; z-index:2; }
+.hero:hover h1 { transform: scale(1.05); }
+.hero h1 span { color:#38bdf8; }
+.hero p { font-size:1.2em; margin-top:10px; color:#cbd5e1; z-index:2; }
+.hero .btn { margin-top:20px; position:relative; overflow:hidden; z-index:2; }
+.hero .btn::before { content:""; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(120deg,#38bdf8,#06b6d4); transition:0.5s; z-index:0; }
+.hero .btn:hover::before { left:0; }
+.hero .btn span { position:relative; z-index:1; }
+.hero .grass { position:absolute; bottom:0; width:100%; height:150px; background: linear-gradient(to top,#22c55e 0%,transparent 100%); animation: sway 2s infinite alternate; z-index:1; }
+@keyframes sway { 0%{ transform:translateX(0); } 100%{ transform:translateX(10px); } }
+
+/* ================= Floating icons ================= */
+.floating-icon { position:absolute; width:40px; height:40px; z-index:3; transition: transform 0.3s ease; pointer-events:none; }
+
+/* ================= Particle canvas ================= */
+#particles { position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+
+/* ================= Sections ================= */
+.section { padding:100px 50px; position:relative; z-index:1; transition: transform 0.3s ease; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:30px; margin-top:30px; }
+.card { background: rgba(255,255,255,0.08); padding:25px; border-radius:20px; backdrop-filter: blur(10px); opacity:0; transform:translateY(50px); transition: all 0.5s ease-in-out; }
+.card.show { opacity:1; transform:translateY(0); }
+.card h3 { margin-bottom:10px; font-size:1.2em; color:#38bdf8; }
+.card p { font-size:1em; color:#d1d5db; line-height:1.4; }
+
+/* ================= Login/Admin ================= */
+.login-section, .admin-section { display:none; justify-content:center; align-items:center; min-height:100vh; flex-direction:column; text-align:center; padding:20px; }
+.login-section.active, .admin-section.active { display:flex; }
+.login-section input, .admin-section input { padding:10px; margin:10px 0; border-radius:8px; border:none; width:250px; }
+.login-section button, .admin-section button { padding:10px 20px; border:none; border-radius:8px; background:#38bdf8; color:#0f172a; cursor:pointer; margin-top:10px; }
+.project-card { display:flex; flex-direction:column; background: rgba(255,255,255,0.12); padding:15px; margin:10px 0; border-radius:12px; transition:0.3s; }
+.project-card:hover { background: rgba(255,255,255,0.2); }
+.project-card input { margin:5px 0; padding:8px; border-radius:6px; border:none; }
+.project-card button { margin:5px 0; background:red; color:white; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; transition:0.3s; }
+
+/* ================= Full-screen Contact ================= */
+#contact { min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background:#1e293b; }
+#contact h2 { font-size:2.5em; margin-bottom:20px; }
+#contact p { font-size:1.2em; margin:10px 0; }
+
+/* ================= Footer ================= */
+footer { text-align:center; padding:30px; opacity:0.7; }
+
+/* ================= Responsive ================= */
+#admin{
+   margin:5px 0; background:#06b6d4; color:white; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; transition:0.3s;margin-left: 2%;
+}
+@media(max-width:768px){ header{flex-direction:column;} header nav a{margin:10px 0;} .hero h1{font-size:2em;} .hero img{width:140px;height:140px;} }
+</style>
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-circle">⏳</div>
+  <span>Loading... Get ready!</span>
+</div>
+
+<!-- Particle Background -->
+<canvas id="particles"></canvas>
+
+<!-- Header -->
+<header>
+  <h2>Eric <span>NIYITANGA</span></h2>
+  <nav>
+    <a href="">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+        
+    <a href="#contact">Contact</a>
+
+  </nav>
+  <button class="btn" id="admin" onclick="showLogin()">Admin Login</button>
+  
+  <button id="themeToggle">🌙</button>
+</header>
+
+<!-- Hero -->
+<section class="hero section" id="hero">
+  <img src="./Snapchat-348776892.jpg" alt="Eric Hacker">
+  <h1>Hi, I'm <span>Eric NIYITANGA</span></h1>
+  <p>Software Developer • Innovator • Youth Leader</p>
+  <a class="btn"><span>Download My CV</span></a>
+  <div class="grass"></div>
+</section>
+
+<!-- About -->
+<section id="about" class="section">
+  <h2>About Me</h2>
+  <div class="card show">
+    <h3>Who I am</h3>
+    <p>I am a student software developer in Rwanda, passionate about building smart solutions that solve real problems and create impact. <br>I aim to lead innovation and stand out globally. <br>
+    I specialize in PHP,MYSQL,JAVASCRIPT,TAILWIND CSS,BOOSTRAP CSS,REACT JS, VUE JS,EXPRESS JS <br>
+    And by using the Algorithms and Machine learning technology. <br>I can train AI to automated the repetetitive task and recognize pattern <br>
+    let's connect and create something amazing together!
+  </p>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills" class="section">
+  <h2>Skills</h2>
+  <div class="grid" id="skillsContainer"></div>
+  
+</section>
+
+<!-- Projects -->
+<section id="projects" class="section">
+  <h2>Projects</h2>
+  <div class="grid" id="projectsContainer"></div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <h2>Contact Me</h2>
+  <p>Just say "Hello"</p>
+  <p>Email:niyitangaeric77@gmail.com</p>
+  <p>WhatsApp: +250 784474283</p>
+</section>
+
+<!-- Footer -->
+<footer>© 2025 Eric NIYITANGA. All rights reserved.</footer>
+
+<!-- Login/Admin -->
+<section class="login-section" id="loginSection">
+  <h2>Admin Login</h2>
+  <input type="text" placeholder="Username" id="username">
+  <input type="password" placeholder="Password" id="password">
+  <button onclick="login()">Login</button>
+</section>
+
+<section class="admin-section" id="adminSection">
+  <h2>Manage Portfolio</h2>
+  <h3>Add Project</h3>
+  <input type="text" placeholder="Project Name" id="projectName">
+  <input type="text" placeholder="Project Description" id="projectDesc">
+  <button onclick="addProject()">Add Project</button>
+  <div id="adminProjectsList"></div>
+
+  <h3>Add Skill</h3>
+  <input type="text" placeholder="Skill Name" id="skillName">
+  <input type="text" placeholder="Skill Description" id="skillDesc">
+  <button onclick="addSkill()">Add Skill</button>
+  <div id="adminSkillsList"></div>
+
+  <button class="btn" onclick="logout()">Logout</button>
+</section>
+
+<script>
+// Loader
+window.addEventListener("load",()=>{setTimeout(()=>{document.getElementById("loader").style.display="none";},1500);});
+
+// Dark/Light
+const toggle=document.getElementById("themeToggle");
+toggle.addEventListener("click",()=>{document.body.classList.toggle("light"); toggle.textContent=document.body.classList.contains("light")?"🌞":"🌙";});
+
+// Scroll animation
+window.addEventListener("scroll",()=>{document.querySelectorAll(".card, .project-card").forEach(card=>{const pos=card.getBoundingClientRect().top;if(pos<window.innerHeight-50){card.classList.add("show");}});});
+
+// Portfolio LocalStorage
+let projects=JSON.parse(localStorage.getItem("projects"))||[
+{name:"AgriLink Smart Agriculture",desc:"Smart farming system for farmers in Rwanda."},
+{name:"Inshuro AI",desc:"Student failure prediction system."}];
+let skills=JSON.parse(localStorage.getItem("skills"))||[
+{name:"PHP",desc:"Backend development, APIs, database integration."},
+{name:"JavaScript",desc:"Frontend interactivity, DOM, animations."}];
+
+function saveProjects(){ localStorage.setItem("projects",JSON.stringify(projects)); }
+function saveSkills(){ localStorage.setItem("skills",JSON.stringify(skills)); }
+
+function renderProjects(){ const container=document.getElementById("projectsContainer"); container.innerHTML=""; projects.forEach(p=>{const div=document.createElement("div"); div.className="card"; div.innerHTML=`<h3>${p.name}</h3><p>${p.desc}</p>`; container.appendChild(div); setTimeout(()=>div.classList.add("show"),100);}); }
+function renderSkills(){ const container=document.getElementById("skillsContainer"); container.innerHTML=""; skills.forEach(p=>{const div=document.createElement("div"); div.className="card"; div.innerHTML=`<h3>${p.name}</h3><p>${p.desc}</p>`; container.appendChild(div); setTimeout(()=>div.classList.add("show"),100);}); }
+
+renderProjects();
+renderSkills();
+
+// Admin/Login
+function showLogin(){document.getElementById("loginSection").classList.add("active"); window.scrollTo({top:0,behavior:"smooth"});}
+function login(){const user=document.getElementById("username").value; const pass=document.getElementById("password").value; if(user==="admin" && pass==="1234"){document.getElementById("loginSection").classList.remove("active"); document.getElementById("adminSection").classList.add("active"); renderAdmin();} else {alert("Wrong credentials!");}}
+function logout(){document.getElementById("adminSection").classList.remove("active");}
+
+// Admin CRUD
+function renderAdmin(){ 
+  const projectList=document.getElementById("adminProjectsList"); 
+  projectList.innerHTML=""; 
+  projects.forEach((p,i)=>{ 
+    const div=document.createElement("div"); 
+    div.className="project-card card"; 
+    div.innerHTML=`<input type="text" value="${p.name}" id="editProjectName${i}"><input type="text" value="${p.desc}" id="editProjectDesc${i}"><button onclick="updateProject(${i})">Update</button><button onclick="deleteProject(${i})">Delete</button>`; 
+    projectList.appendChild(div);
+  });
+
+  const skillList=document.getElementById("adminSkillsList");
+  skillList.innerHTML="";
+  skills.forEach((s,i)=>{
+    const div=document.createElement("div");
+    div.className="project-card card";
+    div.innerHTML=`<input type="text" value="${s.name}" id="editSkillName${i}"><input type="text" value="${s.desc}" id="editSkillDesc${i}"><button onclick="updateSkill(${i})">Update</button><button onclick="deleteSkill(${i})">Delete</button>`;
+    skillList.appendChild(div);
+  });
+}
+
+// Projects CRUD
+function addProject(){ const name=document.getElementById("projectName").value; const desc=document.getElementById("projectDesc").value; if(name&&desc){projects.push({name,desc}); saveProjects(); renderProjects(); renderAdmin(); document.getElementById("projectName").value=""; document.getElementById("projectDesc").value="";} }
+function updateProject(i){ const name=document.getElementById(`editProjectName${i}`).value; const desc=document.getElementById(`editProjectDesc${i}`).value; projects[i]={name,desc}; saveProjects(); renderProjects(); renderAdmin();}
+function deleteProject(i){ projects.splice(i,1); saveProjects(); renderProjects(); renderAdmin();}
+
+// Skills CRUD
+function addSkill(){ const name=document.getElementById("skillName").value; const desc=document.getElementById("skillDesc").value; if(name&&desc){skills.push({name,desc}); saveSkills(); renderSkills(); renderAdmin(); document.getElementById("skillName").value=""; document.getElementById("skillDesc").value="";} }
+function updateSkill(i){ const name=document.getElementById(`editSkillName${i}`).value; const desc=document.getElementById(`editSkillDesc${i}`).value; skills[i]={name,desc}; saveSkills(); renderSkills(); renderAdmin();}
+function deleteSkill(i){ skills.splice(i,1); saveSkills(); renderSkills(); renderAdmin();}
+
+/* ================= Floating Skill Icons ================= */
+const floatingIconsData = [
+  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg", top:10, left:5},
+  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", top:20, left:80},
+  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", top:70, left:20},
+  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", top:60, left:70}
+];
+
+floatingIconsData.forEach((icon,i)=>{
+  const img=document.createElement("img");
+  img.src=icon.src;
+  img.className="floating-icon";
+  img.style.top=icon.top+"%";
+  img.style.left=icon.left+"%";
+  document.body.appendChild(img);
+});
+
+const floatingIcons = document.querySelectorAll(".floating-icon");
+let angle = 0;
+function animateFloatingIcons(){
+  angle += 0.01;
+  floatingIcons.forEach((icon,i)=>{
+    const radius = 50 + i*20;
+    const x = window.innerWidth/2 + radius*Math.cos(angle + i) - 25;
+    const y = window.innerHeight/2 + radius*Math.sin(angle + i) - 25;
+    icon.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  requestAnimationFrame(animateFloatingIcons);
+}
+animateFloatingIcons();
+
+/* ================= Particle Background ================= */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particlesArr = [];
+class Particle{
+  constructor(x,y,radius,color){
+    this.x=x; this.y=y; this.radius=radius; this.color=color;
+    this.dx=Math.random()*1-0.5;
+    this.dy=Math.random()*1-0.5;
+  }
+  draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.radius,0,Math.PI*2); ctx.fillStyle=this.color; ctx.fill(); }
+  update(){
+    this.x+=this.dx; this.y+=this.dy;
+    if(this.x<0||this.x>canvas.width) this.dx*=-1;
+    if(this.y<0||this.y>canvas.height) this.dy*=-1;
+    this.draw();
+  }
+}
+function initParticles(){
+  particlesArr=[];
+  for(let i=0;i<100;i++){
+    let radius=Math.random()*2+1;
+    let x=Math.random()*canvas.width;
+    let y=Math.random()*canvas.height;
+    particlesArr.push(new Particle(x,y,radius,'#38bdf8'));
+  }
+}
+initParticles();
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particlesArr.forEach(p=>p.update());
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// Particle mouse interaction
+window.addEventListener('mousemove', e=>{
+  particlesArr.forEach(p=>{
+    let dist = Math.hypot(p.x-e.x, p.y-e.y);
+    if(dist<50){
+      p.x += (p.x - e.x)*0.05;
+      p.y += (p.y - e.y)*0.05;
+    }
+  });
+});
+
+// Resize canvas
+window.addEventListener('resize',()=>{
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  initParticles();
+});
+
+/* ================= Scroll-based Parallax ================= */
+window.addEventListener('scroll', ()=>{
+  const scrollY = window.scrollY;
+  const hero = document.querySelector('.hero');
+  hero.style.transform = `translateY(${scrollY * 0.2}px)`;
+  floatingIcons.forEach((icon,i)=>{
+    icon.style.transform += ` translateY(${scrollY * (0.05*(i+1))}px)`;
+  });
+});
+</script>
+
+</body>
+</html>
