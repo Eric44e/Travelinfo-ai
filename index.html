@@ -72,7 +72,9 @@ header nav a:hover { color:#38bdf8; }
 footer { text-align:center; padding:30px; opacity:0.7; }
 
 /* ================= Responsive ================= */
-#admin{ margin:5px 0; background:#06b6d4; color:white; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; transition:0.3s;margin-left: 2%; }
+#admin{
+   margin:5px 0; background:#06b6d4; color:white; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; transition:0.3s;margin-left: 2%;
+}
 @media(max-width:768px){ header{flex-direction:column;} header nav a{margin:10px 0;} .hero h1{font-size:2em;} .hero img{width:140px;height:140px;} }
 </style>
 </head>
@@ -94,7 +96,7 @@ footer { text-align:center; padding:30px; opacity:0.7; }
     <a href="">Home</a>
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>       
+    <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
   </nav>
   <button class="btn" id="admin" onclick="showLogin()">Admin Login</button>
@@ -115,11 +117,9 @@ footer { text-align:center; padding:30px; opacity:0.7; }
   <h2>About Me</h2>
   <div class="card show">
     <h3>Who I am</h3>
-    <p>I am a student software developer in Rwanda, passionate about building smart solutions that solve real problems and create impact. <br>I aim to lead innovation and stand out globally. <br>
-    I specialize in PHP, MYSQL, JavaScript, Tailwind CSS, Bootstrap CSS, React JS, Vue JS, Express JS <br>
-    And by using the Algorithms and Machine learning technology. <br>I can train AI to automate repetitive tasks and recognize patterns. <br>
-    Let's connect and create something amazing together!
-    </p>
+    <p>I am a student software developer in Rwanda, passionate about building smart solutions that solve real problems and create impact. 
+    I specialize in PHP, MYSQL, JavaScript, Tailwind CSS, Bootstrap CSS, React JS, Vue JS, Express JS, and AI/ML technologies.
+    Let's connect and create something amazing together!</p>
   </div>
 </section>
 
@@ -172,68 +172,61 @@ footer { text-align:center; padding:30px; opacity:0.7; }
 </section>
 
 <script>
-// ================= Loader =================
+// Loader
 window.addEventListener("load",()=>{setTimeout(()=>{document.getElementById("loader").style.display="none";},1500);});
 
-// ================= Dark/Light Toggle =================
+// Dark/Light
 const toggle=document.getElementById("themeToggle");
 toggle.addEventListener("click",()=>{document.body.classList.toggle("light"); toggle.textContent=document.body.classList.contains("light")?"🌞":"🌙";});
 
-// ================= Scroll animation =================
+// Scroll animation
 window.addEventListener("scroll",()=>{document.querySelectorAll(".card, .project-card").forEach(card=>{const pos=card.getBoundingClientRect().top;if(pos<window.innerHeight-50){card.classList.add("show");}});});
 
-// ================= Portfolio LocalStorage =================
-let projects = JSON.parse(localStorage.getItem("projects"))||[
-  {name:"AgriLink Smart Agriculture",desc:"Smart farming system for farmers in Rwanda."},
-  {name:"Inshuro AI",desc:"Student failure prediction system."}
+// Portfolio LocalStorage
+let projects = JSON.parse(localStorage.getItem("projects")) || [
+  {name:"AgriLink Smart Agriculture", desc:"Smart farming system for Rwandan farmers with IoT monitoring and AI crop diagnostics."},
+  {name:"Inshuro AI", desc:"Predictive tool to detect patterns of student failure and suggest interventions."},
+  {name:"JobPath AI", desc:"AI-powered career discovery & skills advisor for youth in Rwanda."},
+  {name:"Umva AI", desc:"Real-time Rwandan Sign Language to voice/text translator for hearing-impaired users."},
+  {name:"TravelInfo AI", desc:"Automatic location-based info & notifications for travelers."},
+  {name:"RwandaHealthNet", desc:"Real-time rural health emergency reporting and management system."},
+  {name:"Smart School Assistant", desc:"AI-powered system to assist students and staff with administrative tasks."},
+  {name:"Agri-Alert AI", desc:"Predicts weather, pests, and diseases to help farmers protect crops."},
+  {name:"Student Pocket Money System", desc:"Automated system to manage and track student allowances."},
+  {name:"e-Mama Maternal Health Tracker", desc:"Supports rural mothers with health tracking and reminders."}
 ];
-let skills = JSON.parse(localStorage.getItem("skills"))||[
-  {name:"PHP",desc:"Backend development, APIs, database integration."},
-  {name:"JavaScript",desc:"Frontend interactivity, DOM, animations."}
+
+let skills = JSON.parse(localStorage.getItem("skills")) || [
+  {name:"PHP", desc:"Backend development, APIs, database integration."},
+  {name:"JavaScript", desc:"Frontend interactivity, DOM manipulation, animations."},
+  {name:"MySQL", desc:"Database design, queries, optimization."},
+  {name:"Tailwind CSS", desc:"Modern UI design and responsive layouts."},
+  {name:"Bootstrap CSS", desc:"Rapid front-end development and grid systems."},
+  {name:"React JS", desc:"Component-based web apps, state management."},
+  {name:"Vue JS", desc:"Reactive UI development and component-based architecture."},
+  {name:"Node.js", desc:"Server-side JavaScript runtime for APIs and backend logic."},
+  {name:"Express JS", desc:"Web server framework for Node.js applications."},
+  {name:"Algorithms & ML", desc:"Problem-solving, pattern recognition, AI automation."}
 ];
 
 function saveProjects(){ localStorage.setItem("projects",JSON.stringify(projects)); }
 function saveSkills(){ localStorage.setItem("skills",JSON.stringify(skills)); }
 
-function renderProjects(){ 
-  const container=document.getElementById("projectsContainer"); container.innerHTML="";
-  projects.forEach((p,i)=>{
-    const div=document.createElement("div"); 
-    div.className="card"; 
-    div.innerHTML=`<h3>${p.name}</h3><p>${p.desc}</p>`; 
-    container.appendChild(div); 
-    setTimeout(()=>div.classList.add("show"),100);
-  });
-}
+function renderProjects(){ const container=document.getElementById("projectsContainer"); container.innerHTML=""; projects.forEach(p=>{const div=document.createElement("div"); div.className="card"; div.innerHTML=`<h3>${p.name}</h3><p>${p.desc}</p>`; container.appendChild(div); setTimeout(()=>div.classList.add("show"),100);}); }
+function renderSkills(){ const container=document.getElementById("skillsContainer"); container.innerHTML=""; skills.forEach(p=>{const div=document.createElement("div"); div.className="card"; div.innerHTML=`<h3>${p.name}</h3><p>${p.desc}</p>`; container.appendChild(div); setTimeout(()=>div.classList.add("show"),100);}); }
 
-function renderSkills(){ 
-  const container=document.getElementById("skillsContainer"); container.innerHTML="";
-  skills.forEach((s,i)=>{
-    const div=document.createElement("div"); 
-    div.className="card"; 
-    div.innerHTML=`<h3>${s.name}</h3><p>${s.desc}</p>`; 
-    container.appendChild(div); 
-    setTimeout(()=>div.classList.add("show"),100);
-  });
-}
+renderProjects();
+renderSkills();
 
-// ================= Admin/Login =================
+// Admin/Login
 function showLogin(){document.getElementById("loginSection").classList.add("active"); window.scrollTo({top:0,behavior:"smooth"});}
-function login(){
-  const user=document.getElementById("username").value; 
-  const pass=document.getElementById("password").value; 
-  if(user==="admin" && pass==="1234"){
-    document.getElementById("loginSection").classList.remove("active"); 
-    document.getElementById("adminSection").classList.add("active"); 
-    renderAdmin();
-  } else {alert("Wrong credentials!");}
-}
+function login(){const user=document.getElementById("username").value; const pass=document.getElementById("password").value; if(user==="admin" && pass==="1234"){document.getElementById("loginSection").classList.remove("active"); document.getElementById("adminSection").classList.add("active"); renderAdmin();} else {alert("Wrong credentials!");}}
 function logout(){document.getElementById("adminSection").classList.remove("active");}
 
-// ================= Admin CRUD =================
+// Admin CRUD
 function renderAdmin(){ 
-  // Projects
-  const projectList=document.getElementById("adminProjectsList"); projectList.innerHTML=""; 
+  const projectList=document.getElementById("adminProjectsList"); 
+  projectList.innerHTML=""; 
   projects.forEach((p,i)=>{ 
     const div=document.createElement("div"); 
     div.className="project-card card"; 
@@ -241,8 +234,8 @@ function renderAdmin(){
     projectList.appendChild(div);
   });
 
-  // Skills
-  const skillList=document.getElementById("adminSkillsList"); skillList.innerHTML="";
+  const skillList=document.getElementById("adminSkillsList");
+  skillList.innerHTML="";
   skills.forEach((s,i)=>{
     const div=document.createElement("div");
     div.className="project-card card";
@@ -251,34 +244,112 @@ function renderAdmin(){
   });
 }
 
-// ================= CRUD Functions =================
-function addProject(){ 
-  const name=document.getElementById("projectName").value.trim(); 
-  const desc=document.getElementById("projectDesc").value.trim(); 
-  if(name && desc){projects.push({name,desc}); saveProjects(); renderProjects(); renderAdmin(); document.getElementById("projectName").value=""; document.getElementById("projectDesc").value="";}
-}
-function updateProject(i){ 
-  const name=document.getElementById(`editProjectName${i}`).value; 
-  const desc=document.getElementById(`editProjectDesc${i}`).value; 
-  projects[i]={name,desc}; saveProjects(); renderProjects(); renderAdmin();
-}
+// Projects CRUD
+function addProject(){ const name=document.getElementById("projectName").value; const desc=document.getElementById("projectDesc").value; if(name&&desc){projects.push({name,desc}); saveProjects(); renderProjects(); renderAdmin(); document.getElementById("projectName").value=""; document.getElementById("projectDesc").value="";} }
+function updateProject(i){ const name=document.getElementById(`editProjectName${i}`).value; const desc=document.getElementById(`editProjectDesc${i}`).value; projects[i]={name,desc}; saveProjects(); renderProjects(); renderAdmin();}
 function deleteProject(i){ projects.splice(i,1); saveProjects(); renderProjects(); renderAdmin();}
 
-function addSkill(){ 
-  const name=document.getElementById("skillName").value.trim(); 
-  const desc=document.getElementById("skillDesc").value.trim(); 
-  if(name && desc){skills.push({name,desc}); saveSkills(); renderSkills(); renderAdmin(); document.getElementById("skillName").value=""; document.getElementById("skillDesc").value="";}
-}
-function updateSkill(i){ 
-  const name=document.getElementById(`editSkillName${i}`).value; 
-  const desc=document.getElementById(`editSkillDesc${i}`).value; 
-  skills[i]={name,desc}; saveSkills(); renderSkills(); renderAdmin();
-}
+// Skills CRUD
+function addSkill(){ const name=document.getElementById("skillName").value; const desc=document.getElementById("skillDesc").value; if(name&&desc){skills.push({name,desc}); saveSkills(); renderSkills(); renderAdmin(); document.getElementById("skillName").value=""; document.getElementById("skillDesc").value="";} }
+function updateSkill(i){ const name=document.getElementById(`editSkillName${i}`).value; const desc=document.getElementById(`editSkillDesc${i}`).value; skills[i]={name,desc}; saveSkills(); renderSkills(); renderAdmin();}
 function deleteSkill(i){ skills.splice(i,1); saveSkills(); renderSkills(); renderAdmin();}
 
-// ================= Initial render =================
-renderProjects();
-renderSkills();
+/* ================= Floating Skill Icons ================= */
+const floatingIconsData = [
+  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg", top:10, left:5},
+  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", top:20, left:80},
+  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", top:70, left:20},
+  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", top:60, left:70}
+];
+
+floatingIconsData.forEach((icon,i)=>{
+  const img=document.createElement("img");
+  img.src=icon.src;
+  img.className="floating-icon";
+  img.style.top=icon.top+"%";
+  img.style.left=icon.left+"%";
+  document.body.appendChild(img);
+});
+
+const floatingIcons = document.querySelectorAll(".floating-icon");
+let angle = 0;
+function animateFloatingIcons(){
+  angle += 0.01;
+  floatingIcons.forEach((icon,i)=>{
+    const radius = 50 + i*20;
+    const x = window.innerWidth/2 + radius*Math.cos(angle + i) - 25;
+    const y = window.innerHeight/2 + radius*Math.sin(angle + i) - 25;
+    icon.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  requestAnimationFrame(animateFloatingIcons);
+}
+animateFloatingIcons();
+
+/* ================= Particle Background ================= */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particlesArr = [];
+class Particle{
+  constructor(x,y,radius,color){
+    this.x=x; this.y=y; this.radius=radius; this.color=color;
+    this.dx=Math.random()*1-0.5;
+    this.dy=Math.random()*1-0.5;
+  }
+  draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.radius,0,Math.PI*2); ctx.fillStyle=this.color; ctx.fill(); }
+  update(){
+    this.x+=this.dx; this.y+=this.dy;
+    if(this.x<0||this.x>canvas.width) this.dx*=-1;
+    if(this.y<0||this.y>canvas.height) this.dy*=-1;
+    this.draw();
+  }
+}
+function initParticles(){
+  particlesArr=[];
+  for(let i=0;i<100;i++){
+    let radius=Math.random()*2+1;
+    let x=Math.random()*canvas.width;
+    let y=Math.random()*canvas.height;
+    particlesArr.push(new Particle(x,y,radius,'#38bdf8'));
+  }
+}
+initParticles();
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particlesArr.forEach(p=>p.update());
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// Particle mouse interaction
+window.addEventListener('mousemove', e=>{
+  particlesArr.forEach(p=>{
+    let dist = Math.hypot(p.x-e.x, p.y-e.y);
+    if(dist<50){
+      p.x += (p.x - e.x)*0.05;
+      p.y += (p.y - e.y)*0.05;
+    }
+  });
+});
+
+// Resize canvas
+window.addEventListener('resize',()=>{
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  initParticles();
+});
+
+// Scroll-based Parallax
+window.addEventListener('scroll', ()=>{
+  const scrollY = window.scrollY;
+  const hero = document.querySelector('.hero');
+  hero.style.transform = `translateY(${scrollY * 0.2}px)`;
+  floatingIcons.forEach((icon,i)=>{
+    icon.style.transform += ` translateY(${scrollY * (0.05*(i+1))}px)`;
+  });
+});
 </script>
 
 </body>
