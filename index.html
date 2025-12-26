@@ -5,24 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eric NIYITANGA Portfolio</title>
 <link rel="shortcut icon" href="ERICH.png" type="image/x-icon">
+<meta name="description" content="Eric NIYITANGA - Student Software Developer from Rwanda. Portfolio showcasing skills, projects, and innovative solutions.">
+<meta name="keywords" content="Software Developer, PHP, JavaScript, Tailwind CSS, React JS, Projects, Portfolio, Rwanda, AI">
 <style>
 /* ================= Reset & Base ================= */
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
-body { background:#0f172a; color:#e5e7eb; overflow-x:hidden; transition:all 0.3s ease; }
+body { background:#0f172a; color:#e5e7eb; overflow-x:hidden; transition:all 0.3s ease; scroll-behavior:smooth; }
 body.light { background:#f3f4f6; color:#0f172a; }
 a { text-decoration:none; color:inherit; }
 button { cursor:pointer; }
 
 /* ================= Loader ================= */
-#loader { position:fixed; top:0; left:0; width:100%; height:100%; background:#0f172a; color:#38bdf8; display:flex; justify-content:center; align-items:center; flex-direction:column; font-size:2em; z-index:9999; }
+#loader { 
+  position:fixed; top:0; left:0; width:100%; height:100%; background:#0f172a; 
+  color:#38bdf8; display:flex; justify-content:center; align-items:center; flex-direction:column; font-size:2em; z-index:9999; 
+}
+.loader-circle {
+  width:80px; height:80px; border:5px solid #38bdf8; border-top:5px solid #06b6d4; border-radius:50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
 #loader span { margin-top:20px; font-size:1em; color:#e5e7eb; }
 
 /* ================= Header ================= */
-header { position:fixed; top:0; left:0; width: 100%; display:flex; justify-content:space-between; align-items:center; padding:20px 50px; z-index:100; background:rgba(15,23,42,0.8); backdrop-filter:blur(10px); transition:0.3s; }
-header nav a { margin-left:20px; font-weight:500; transition:0.3s; }
-header nav a:hover { color:#38bdf8; }
-#themeToggle { cursor:pointer; padding:5px 10px; border:none; border-radius:8px; background:#38bdf8; color:#0f172a; margin-left:20px; transition:0.3s; }
+header { 
+  position:fixed; top:0; left:0; width: 100%; display:flex; justify-content:space-between; align-items:center; 
+  padding:20px 5%; z-index:100; background:rgba(15,23,42,0.8); backdrop-filter:blur(10px); transition:all 0.3s ease; 
+}
+header h2 { transition: transform 0.3s ease; }
+header h2 span { color:#38bdf8; }
+nav { display:flex; align-items:center; gap:20px; }
+nav a { font-weight:500; transition:0.3s; }
+nav a.active, nav a:hover { color:#38bdf8; }
+#themeToggle { cursor:pointer; padding:5px 10px; border:none; border-radius:8px; background:#38bdf8; color:#0f172a; transition:0.3s; margin-left:20px; }
 #themeToggle:hover { opacity:0.8; }
+#admin{ margin:5px 0; background:#06b6d4; color:white; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; transition:0.3s; }
+
+/* ================= Hamburger ================= */
+.hamburger { display:none; flex-direction:column; justify-content:space-between; width:30px; height:22px; cursor:pointer; }
+.hamburger div { height:4px; background:#38bdf8; border-radius:2px; transition:0.3s; }
+nav.mobile-active { display:flex; flex-direction:column; position:absolute; top:70px; right:5%; background:rgba(15,23,42,0.95); padding:20px; border-radius:12px; }
+nav.mobile-active a { margin:10px 0; }
 
 /* ================= Hero ================= */
 .hero { position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; overflow:hidden; cursor:pointer; }
@@ -46,7 +69,7 @@ header nav a:hover { color:#38bdf8; }
 #particles { position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
 
 /* ================= Sections ================= */
-.section { padding:100px 50px; position:relative; z-index:1; transition: transform 0.3s ease; }
+.section { padding:100px 5%; position:relative; z-index:1; transition: transform 0.3s ease; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:30px; margin-top:30px; }
 .card { background: rgba(255,255,255,0.08); padding:25px; border-radius:20px; backdrop-filter: blur(10px); opacity:0; transform:translateY(50px); transition: all 0.5s ease-in-out; }
 .card.show { opacity:1; transform:translateY(0); }
@@ -58,12 +81,8 @@ header nav a:hover { color:#38bdf8; }
 .login-section.active, .admin-section.active { display:flex; }
 .login-section input, .admin-section input { padding:10px; margin:10px 0; border-radius:8px; border:none; width:250px; }
 .login-section button, .admin-section button { padding:10px 20px; border:none; border-radius:8px; background:#38bdf8; color:#0f172a; cursor:pointer; margin-top:10px; }
-.project-card { display:flex; flex-direction:column; background: rgba(255,255,255,0.12); padding:15px; margin:10px 0; border-radius:12px; transition:0.3s; }
-.project-card:hover { background: rgba(255,255,255,0.2); }
-.project-card input { margin:5px 0; padding:8px; border-radius:6px; border:none; }
-.project-card button { margin:5px 0; background:red; color:white; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; transition:0.3s; }
 
-/* ================= Full-screen Contact ================= */
+/* ================= Contact ================= */
 #contact { min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background:#1e293b; }
 #contact h2 { font-size:2.5em; margin-bottom:20px; }
 #contact p { font-size:1.2em; margin:10px 0; }
@@ -72,17 +91,83 @@ header nav a:hover { color:#38bdf8; }
 footer { text-align:center; padding:30px; opacity:0.7; }
 
 /* ================= Responsive ================= */
-#admin{ margin:5px 0; background:#06b6d4; color:white; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; transition:0.3s;margin-left: 2%; }
-@media(max-width:768px){ header{flex-direction:column;} header nav a{margin:10px 0;} .hero h1{font-size:2em;} .hero img{width:140px;height:140px;} }
+@media(max-width:768px){ 
+  header{flex-direction:row;} 
+  nav { display:none; }
+  .hamburger { display:flex; }
+  .hero h1 { font-size:2em; } 
+  .hero img { width:140px;height:140px; } 
+}
 </style>
 </head>
 <body>
 
 <!-- Loader -->
 <div id="loader">
-  <div class="loader-circle">⏳</div>
-  <span>Loading... Get ready!</span>
+  <div class="loader-dots">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <span>Loading...</span>
 </div>
+
+<style>
+/* Loader container */
+#loader {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:#0f172a;
+  color:#38bdf8;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  font-family:'Segoe UI',sans-serif;
+  z-index:9999;
+}
+
+/* Loading dots */
+.loader-dots {
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+.loader-dots span {
+  width:15px;
+  height:15px;
+  background:#38bdf8;
+  border-radius:50%;
+  display:inline-block;
+  animation: bounce 0.6s infinite alternate;
+}
+.loader-dots span:nth-child(2){ animation-delay: 0.2s; }
+.loader-dots span:nth-child(3){ animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0% { transform: translateY(0); opacity:0.6; }
+  50% { transform: translateY(-15px); opacity:1; }
+  100% { transform: translateY(0); opacity:0.6; }
+}
+
+/* Loading text */
+#loader span {
+  font-size:1em;
+  color:#e5e7eb;
+  letter-spacing:1px;
+}
+</style>
+
+<script>
+// Loader hide after page load
+window.addEventListener("load",()=>{
+  setTimeout(()=>{
+    document.getElementById("loader").style.opacity = "0";
+    setTimeout(()=>{ document.getElementById("loader").style.display = "none"; },500);
+  },3000); // keeps loader for 1s minimum
+});
+</script>
 
 <!-- Particle Background -->
 <canvas id="particles"></canvas>
@@ -91,12 +176,13 @@ footer { text-align:center; padding:30px; opacity:0.7; }
 <header>
   <h2>Eric <span>NIYITANGA</span></h2>
   <nav>
-    <a href="">Home</a>
+    <a href="#hero" class="active">Home</a>
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
   </nav>
+  <div class="hamburger" onclick="toggleMenu()"><div></div><div></div><div></div></div>
   <button class="btn" id="admin" onclick="showLogin()">Admin Login</button>
   <button id="themeToggle">🌙</button>
 </header>
@@ -115,11 +201,7 @@ footer { text-align:center; padding:30px; opacity:0.7; }
   <h2>About Me</h2>
   <div class="card show">
     <h3>Who I am</h3>
-    <p>I am a student software developer in Rwanda, passionate about building smart solutions that solve real problems and create impact. <br>I aim to lead innovation and stand out globally. <br>
-    I specialize in PHP, MySQL, JavaScript, Tailwind CSS, Bootstrap CSS, React JS, Vue JS, Express JS <br>
-    And by using Algorithms and Machine Learning technology. <br>I can train AI to automate repetitive tasks and recognize patterns. <br>
-    Let's connect and create something amazing together!
-    </p>
+    <p>I am a student software developer in Rwanda, passionate about building smart solutions that solve real problems and create impact.</p>
   </div>
 </section>
 
@@ -138,7 +220,6 @@ footer { text-align:center; padding:30px; opacity:0.7; }
 <!-- Contact -->
 <section id="contact">
   <h2>Contact Me</h2>
-  <p>Just say "Hello"</p>
   <p>Email: niyitangaeric77@gmail.com</p>
   <p>WhatsApp: +250 784474283</p>
 </section>
@@ -159,6 +240,7 @@ footer { text-align:center; padding:30px; opacity:0.7; }
   <h3>Add Project</h3>
   <input type="text" placeholder="Project Name" id="projectName">
   <input type="text" placeholder="Project Description" id="projectDesc">
+  <input type="text" placeholder="Image URL" id="projectImage">
   <button onclick="addProject()">Add Project</button>
   <div id="adminProjectsList"></div>
 
@@ -175,60 +257,32 @@ footer { text-align:center; padding:30px; opacity:0.7; }
 // Loader
 window.addEventListener("load",()=>{setTimeout(()=>{document.getElementById("loader").style.display="none";},1500);});
 
-// Dark/Light toggle
+// Dark/Light Theme
 const toggle=document.getElementById("themeToggle");
 toggle.addEventListener("click",()=>{document.body.classList.toggle("light"); toggle.textContent=document.body.classList.contains("light")?"🌞":"🌙";});
 
-// Scroll animation
+// Hamburger
+function toggleMenu(){ document.querySelector("header nav").classList.toggle("mobile-active"); }
+
+// Scroll Animation
 window.addEventListener("scroll",()=>{document.querySelectorAll(".card, .project-card").forEach(card=>{const pos=card.getBoundingClientRect().top;if(pos<window.innerHeight-50){card.classList.add("show");}});});
 
-// Portfolio localStorage data
-let projects=JSON.parse(localStorage.getItem("projects"))||[
-  {name:"AgriLink Smart Agriculture", desc:"Smart farming system for farmers in Rwanda."},
-  {name:"Inshuro AI", desc:"Student failure prediction system."},
-  {name:"TravelInfo AI", desc:"Automatic location-based info & notifications."},
-  {name:"UmvaAI Pro", desc:"Voice assistant for vulnerable users."},
-  {name:"JobPath AI", desc:"Career discovery & skills advisor for youth."},
-  {name:"Smart School Assistant", desc:"AI-based school management assistant."},
-  {name:"Agri-Alert AI", desc:"Weather and pest prediction for farmers."},
-  {name:"RwandaHealthNet", desc:"Real-time rural health emergency system."},
-  {name:"Service For All", desc:"Leader accountability & reporting system."},
-  {name:"Student Pocket Money System", desc:"Automated pocket money management for students."}
-];
+// Sticky Header Shrink + Active Link
+const header = document.querySelector('header'); const navLinks = document.querySelectorAll('header nav a');
+window.addEventListener('scroll', () => {
+  if(window.scrollY > 50){ header.style.padding = "10px 5%"; header.style.background = "rgba(15,23,42,0.95)"; header.querySelector("h2").style.transform = "scale(0.9)"; } 
+  else { header.style.padding = "20px 5%"; header.style.background = "rgba(15,23,42,0.8)"; header.querySelector("h2").style.transform = "scale(1)"; }
+  document.querySelectorAll('.section').forEach(sec => { const top = sec.offsetTop - 120; const bottom = top + sec.offsetHeight; const id = sec.getAttribute('id'); if(window.scrollY >= top && window.scrollY < bottom){ navLinks.forEach(link => link.classList.remove('active')); document.querySelector(`header nav a[href="#${id}"]`)?.classList.add('active'); }});
+});
 
-let skills=JSON.parse(localStorage.getItem("skills"))||[
-  {name:"PHP", desc:"Backend development, APIs, database integration."},
-  {name:"JavaScript", desc:"Frontend interactivity, DOM manipulation, animations."},
-  {name:"MySQL", desc:"Database design, queries, optimization."},
-  {name:"Tailwind CSS", desc:"Modern UI design and responsive layouts."},
-  {name:"Bootstrap CSS", desc:"Rapid front-end development and grid systems."},
-  {name:"React JS", desc:"Component-based web apps, state management."},
-  {name:"Vue JS", desc:"Reactive UI development and component-based architecture."},
-  {name:"Node.js", desc:"Server-side JavaScript runtime for APIs and backend logic."},
-  {name:"Express JS", desc:"Web server framework for Node.js applications."},
-  {name:"Algorithms & ML", desc:"Problem-solving, pattern recognition, AI automation."},
-  {name:"Python", desc:"General-purpose programming, scripting, and AI development."},
-  {name:"Django", desc:"Python-based web framework for rapid backend development."},
-  {name:"Laravel", desc:"PHP framework for MVC apps, APIs, and authentication."},
-  {name:"MongoDB", desc:"NoSQL database for flexible and scalable data storage."},
-  {name:"Git & GitHub", desc:"Version control, collaboration, and code management."},
-  {name:"Figma", desc:"UI/UX design, prototyping, and wireframing."},
-  {name:"REST APIs", desc:"Designing and consuming RESTful services."},
-  {name:"GraphQL", desc:"Flexible API query language for frontend/backend."},
-  {name:"Docker", desc:"Containerization for deployment and environment management."},
-  {name:"Linux", desc:"Server administration, commands, and scripting."}
-];
-
-// Save to localStorage
+// Portfolio Data
+let projects=JSON.parse(localStorage.getItem("projects"))||[{name:"AgriLink Smart Agriculture",desc:"Smart farming system.",image:""},{name:"Inshuro AI",desc:"Student failure prediction.",image:""}];
+let skills=JSON.parse(localStorage.getItem("skills"))||[{name:"PHP",desc:"Backend development."},{name:"JavaScript",desc:"Frontend interactivity."}];
 function saveProjects(){ localStorage.setItem("projects",JSON.stringify(projects)); }
 function saveSkills(){ localStorage.setItem("skills",JSON.stringify(skills)); }
-
-// Render functions
-function renderProjects(){ const container=document.getElementById("projectsContainer"); container.innerHTML=""; projects.forEach(p=>{const div=document.createElement("div"); div.className="card"; div.innerHTML=`<h3>${p.name}</h3><p>${p.desc}</p>`; container.appendChild(div); setTimeout(()=>div.classList.add("show"),100);}); }
-function renderSkills(){ const container=document.getElementById("skillsContainer"); container.innerHTML=""; skills.forEach(p=>{const div=document.createElement("div"); div.className="card"; div.innerHTML=`<h3>${p.name}</h3><p>${p.desc}</p>`; container.appendChild(div); setTimeout(()=>div.classList.add("show"),100);}); }
-
-renderProjects();
-renderSkills();
+function renderProjects(){ const container=document.getElementById("projectsContainer"); container.innerHTML=""; projects.forEach(p=>{ const div=document.createElement("div"); div.className="card project-card"; div.innerHTML=`${p.image?`<img src="${p.image}" alt="${p.name}">`:''}<h3>${p.name}</h3><p>${p.desc}</p>`; container.appendChild(div); setTimeout(()=>div.classList.add("show"),100);}); }
+function renderSkills(){ const container=document.getElementById("skillsContainer"); container.innerHTML=""; skills.forEach(p=>{ const div=document.createElement("div"); div.className="card"; div.innerHTML=`<h3>${p.name}</h3><p>${p.desc}</p>`; container.appendChild(div); setTimeout(()=>div.classList.add("show"),100);}); }
+renderProjects(); renderSkills();
 
 // Admin/Login
 function showLogin(){document.getElementById("loginSection").classList.add("active"); window.scrollTo({top:0,behavior:"smooth"});}
@@ -237,132 +291,27 @@ function logout(){document.getElementById("adminSection").classList.remove("acti
 
 // Admin CRUD
 function renderAdmin(){ 
-  const projectList=document.getElementById("adminProjectsList"); 
-  projectList.innerHTML=""; 
-  projects.forEach((p,i)=>{ 
-    const div=document.createElement("div"); 
-    div.className="project-card card"; 
-    div.innerHTML=`<input type="text" value="${p.name}" id="editProjectName${i}"><input type="text" value="${p.desc}" id="editProjectDesc${i}"><button onclick="updateProject(${i})">Update</button><button onclick="deleteProject(${i})">Delete</button>`; 
-    projectList.appendChild(div);
-  });
-
-  const skillList=document.getElementById("adminSkillsList");
-  skillList.innerHTML="";
-  skills.forEach((s,i)=>{
-    const div=document.createElement("div");
-    div.className="project-card card";
-    div.innerHTML=`<input type="text" value="${s.name}" id="editSkillName${i}"><input type="text" value="${s.desc}" id="editSkillDesc${i}"><button onclick="updateSkill(${i})">Update</button><button onclick="deleteSkill(${i})">Delete</button>`;
-    skillList.appendChild(div);
-  });
+  const projectList=document.getElementById("adminProjectsList"); projectList.innerHTML=""; 
+  projects.forEach((p,i)=>{ const div=document.createElement("div"); div.className="project-card card"; div.innerHTML=`<input type="text" value="${p.name}" id="editProjectName${i}"><input type="text" value="${p.desc}" id="editProjectDesc${i}"><input type="text" value="${p.image}" placeholder="Image URL" id="editProjectImage${i}"><button onclick="updateProject(${i})">Update</button><button onclick="deleteProject(${i})">Delete</button>`; projectList.appendChild(div); });
+  const skillList=document.getElementById("adminSkillsList"); skillList.innerHTML="";
+  skills.forEach((s,i)=>{ const div=document.createElement("div"); div.className="project-card card"; div.innerHTML=`<input type="text" value="${s.name}" id="editSkillName${i}"><input type="text" value="${s.desc}" id="editSkillDesc${i}"><button onclick="updateSkill(${i})">Update</button><button onclick="deleteSkill(${i})">Delete</button>`; skillList.appendChild(div); });
 }
 
-// Projects CRUD
-function addProject(){ const name=document.getElementById("projectName").value; const desc=document.getElementById("projectDesc").value; if(name&&desc){projects.push({name,desc}); saveProjects(); renderProjects(); renderAdmin(); document.getElementById("projectName").value=""; document.getElementById("projectDesc").value="";} }
-function updateProject(i){ const name=document.getElementById(`editProjectName${i}`).value; const desc=document.getElementById(`editProjectDesc${i}`).value; projects[i]={name,desc}; saveProjects(); renderProjects(); renderAdmin();}
+// CRUD Functions
+function addProject(){ const name=document.getElementById("projectName").value; const desc=document.getElementById("projectDesc").value; const image=document.getElementById("projectImage").value; if(name&&desc){projects.push({name,desc,image}); saveProjects(); renderProjects(); renderAdmin(); document.getElementById("projectName").value=""; document.getElementById("projectDesc").value=""; document.getElementById("projectImage").value="";} }
+function updateProject(i){ const name=document.getElementById(`editProjectName${i}`).value; const desc=document.getElementById(`editProjectDesc${i}`).value; const image=document.getElementById(`editProjectImage${i}`).value; projects[i]={name,desc,image}; saveProjects(); renderProjects(); renderAdmin();}
 function deleteProject(i){ projects.splice(i,1); saveProjects(); renderProjects(); renderAdmin();}
-
-// Skills CRUD
 function addSkill(){ const name=document.getElementById("skillName").value; const desc=document.getElementById("skillDesc").value; if(name&&desc){skills.push({name,desc}); saveSkills(); renderSkills(); renderAdmin(); document.getElementById("skillName").value=""; document.getElementById("skillDesc").value="";} }
-function updateSkill(i){ const name=document.getElementById(`editSkillName${i}`).value; const desc=document.getElementById(`editSkillDesc${i}`).value; skills[i]={name,desc}; saveSkills(); renderSkills(); renderAdmin();}
-function deleteSkill(i){ skills.splice(i,1); saveSkills(); renderSkills(); renderAdmin();}
+function updateSkill(i){ const name=document.getElementById(`editSkillName${i}`).value; const desc=document.getElementById(`editSkillDesc${i}`).value; skills[i]={name,desc}; saveSkills(); renderSkills(); renderAdmin(); }
+function deleteSkill(i){ skills.splice(i,1); saveSkills(); renderSkills(); renderAdmin(); }
 
-/* ================= Floating Skill Icons ================= */
-const floatingIconsData = [
-  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg", top:10, left:5},
-  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", top:20, left:80},
-  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", top:70, left:20},
-  {src:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", top:60, left:70}
-];
-
-floatingIconsData.forEach((icon,i)=>{
-  const img=document.createElement("img");
-  img.src=icon.src;
-  img.className="floating-icon";
-  img.style.top=icon.top+"%";
-  img.style.left=icon.left+"%";
-  document.body.appendChild(img);
-});
-
-const floatingIcons = document.querySelectorAll(".floating-icon");
-let angle = 0;
-function animateFloatingIcons(){
-  angle += 0.01;
-  floatingIcons.forEach((icon,i)=>{
-    const radius = 50 + i*20;
-    const x = window.innerWidth/2 + radius*Math.cos(angle + i) - 25;
-    const y = window.innerHeight/2 + radius*Math.sin(angle + i) - 25;
-    icon.style.transform = `translate(${x}px, ${y}px)`;
-  });
-  requestAnimationFrame(animateFloatingIcons);
-}
-animateFloatingIcons();
-
-/* ================= Particle Background ================= */
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particlesArr = [];
-class Particle{
-  constructor(x,y,radius,color){
-    this.x=x; this.y=y; this.radius=radius; this.color=color;
-    this.dx=Math.random()*1-0.5;
-    this.dy=Math.random()*1-0.5;
-  }
-  draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.radius,0,Math.PI*2); ctx.fillStyle=this.color; ctx.fill(); }
-  update(){
-    this.x+=this.dx; this.y+=this.dy;
-    if(this.x<0||this.x>canvas.width) this.dx*=-1;
-    if(this.y<0||this.y>canvas.height) this.dy*=-1;
-    this.draw();
-  }
-}
-function initParticles(){
-  particlesArr=[];
-  for(let i=0;i<100;i++){
-    let radius=Math.random()*2+1;
-    let x=Math.random()*canvas.width;
-    let y=Math.random()*canvas.height;
-    particlesArr.push(new Particle(x,y,radius,'#38bdf8'));
-  }
-}
-initParticles();
-function animateParticles(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particlesArr.forEach(p=>p.update());
-  requestAnimationFrame(animateParticles);
-}
-animateParticles();
-
-// Particle mouse interaction
-window.addEventListener('mousemove', e=>{
-  particlesArr.forEach(p=>{
-    let dist = Math.hypot(p.x-e.x, p.y-e.y);
-    if(dist<50){
-      p.x += (p.x - e.x)*0.05;
-      p.y += (p.y - e.y)*0.05;
-    }
-  });
-});
-
-// Resize canvas
-window.addEventListener('resize',()=>{
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-  initParticles();
-});
-
-// Scroll-based Parallax
-window.addEventListener('scroll', ()=>{
-  const scrollY = window.scrollY;
-  const hero = document.querySelector('.hero');
-  hero.style.transform = `translateY(${scrollY * 0.2}px)`;
-  floatingIcons.forEach((icon,i)=>{
-    icon.style.transform += ` translateY(${scrollY * (0.05*(i+1))}px)`;
-  });
-});
+// Particle Animation
+const canvas=document.getElementById("particles"); const ctx=canvas.getContext("2d"); canvas.width=window.innerWidth; canvas.height=window.innerHeight; let particlesArray=[];
+window.addEventListener("resize",()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight; initParticles();});
+function Particle(){ this.x=Math.random()*canvas.width; this.y=Math.random()*canvas.height; this.size=Math.random()*3+1; this.speedX=Math.random()*1-0.5; this.speedY=Math.random()*1-0.5; this.color="#38bdf8"; this.update=function(){ this.x+=this.speedX; this.y+=this.speedY; if(this.x>canvas.width)this.x=0; if(this.x<0)this.x=canvas.width; if(this.y>canvas.height)this.y=0; if(this.y<0)this.y=canvas.height; }; this.draw=function(){ ctx.fillStyle=this.color; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); }; }
+function initParticles(){particlesArray=[]; for(let i=0;i<100;i++){particlesArray.push(new Particle());}}
+function animateParticles(){ctx.clearRect(0,0,canvas.width,canvas.height);particlesArray.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(animateParticles);}
+initParticles(); animateParticles();
 </script>
-
 </body>
 </html>
